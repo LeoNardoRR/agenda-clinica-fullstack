@@ -11,6 +11,8 @@
 
 Sistema Full Stack para consultar horários disponíveis, validar dias úteis e confirmar agendamentos em tempo real.
 
+### [Acessar demonstração pública](https://leonardorr.github.io/agenda-clinica-fullstack/)
+
 </div>
 
 ![Prévia da Clínica Aurora](docs/preview.png)
@@ -20,6 +22,8 @@ Sistema Full Stack para consultar horários disponíveis, validar dias úteis e 
 A **Clínica Aurora** transforma um processo manual de atendimento por WhatsApp em um fluxo digital de poucos passos. O paciente escolhe uma data, consulta a disponibilidade real, informa seus dados e recebe uma confirmação com protocolo.
 
 O backend é a fonte de verdade: consulta os feriados nacionais, aplica as regras da clínica e impede que dois pacientes reservem o mesmo horário.
+
+> **Sobre a demonstração:** o GitHub Pages não executa Node.js nem SQLite. Por isso, a URL pública usa um modo estático de demonstração e salva agendamentos apenas no `localStorage` do navegador. Para avaliar a arquitetura Full Stack real, execute o projeto localmente.
 
 ## Principais funcionalidades
 
@@ -175,6 +179,7 @@ GET /api/health
 | `npm run dev:server` | Executa somente o backend |
 | `npm run test` | Executa os testes automatizados |
 | `npm run build` | Valida o TypeScript e gera o frontend de produção |
+| `npm run build:pages` | Gera o modo estático de demonstração para GitHub Pages |
 | `npm start` | Serve a API e o frontend compilado |
 | `npm run check` | Executa testes e build em uma única verificação |
 

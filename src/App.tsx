@@ -1,18 +1,5 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react'
-
-type Appointment = {
-  id: number
-  patientName: string
-  phone: string
-  date: string
-  time: string
-}
-
-type Availability = {
-  date: string
-  available: string[]
-  blockedReason: string | null
-}
+import { bookAppointment, fetchAppointments, fetchAvailability, isDemoMode, type Appointment, type Availability } from './api'
 
 const todayInSaoPaulo = () => new Intl.DateTimeFormat('en-CA', {
   timeZone: 'America/Sao_Paulo',
@@ -57,9 +44,7 @@ function App() {
   const [confirmation, setConfirmation] = useState<Appointment | null>(null)
 
   const loadAppointments = useCallback(async () => {
-    const response = await fetch('/api/appointments')
-    const data = await response.json()
-    setAppointments(data.appointments ?? [])
+    setAppointments(await fetchAppointments())
   }, [])
 
   const loadAvailability = useCallback(async (selectedDate: string) => {
@@ -67,10 +52,7 @@ function App() {
     setNotice(null)
     setSelectedTime('')
     try {
-      const response = await fetch(`/api/available?date=${encodeURIComponent(selectedDate)}`)
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.error)
-      setAvailability(data)
+      setAvailability(await fetchAvailability(selectedDate))
     } catch (error) {
       setAvailability(null)
       setNotice({ type: 'error', text: error instanceof Error ? error.message : 'Falha ao consultar horários.' })
@@ -95,14 +77,8 @@ function App() {
     setLoading(true)
     setNotice(null)
     try {
-      const response = await fetch('/api/appointments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ patientName, phone, date, time: selectedTime }),
-      })
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.error)
-      setConfirmation(data.appointment)
+      const appointment = await bookAppointment({ patientName, phone, date, time: selectedTime })
+      setConfirmation(appointment)
       setPatientName('')
       setPhone('')
       setSelectedTime('')
@@ -122,6 +98,7 @@ function App() {
         <h1 id="page-title">Seu cuidado começa com um horário.</h1>
         <p>Agende sua consulta em poucos passos, com horários atualizados e confirmação imediata.</p>
         <div className="trust-note"><span>✓</span> Datas e feriados validados em tempo real</div>
+        {isDemoMode ? <div className="demo-note"><strong>Modo demonstração</strong><span>Os agendamentos ficam somente neste navegador.</span></div> : null}
       </section>
 
       <section className="scheduler-card" aria-label="Formulário de agendamento">

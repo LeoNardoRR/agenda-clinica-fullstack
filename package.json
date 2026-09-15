@@ -13,7 +13,7 @@
     "build": "tsc -b && vite build",
     "build:pages": "tsc -b && vite build --config vite.pages.config.ts",
     "start": "node server/index.js",
-    "test": "node --test --test-isolation=none",
+    "test": "node --test",
     "check": "npm run test && npm run build"
   },
   "dependencies": {

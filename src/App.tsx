@@ -26,10 +26,16 @@ const firstValidDate = () => {
   return today.startsWith('2026-') ? today : '2026-02-10'
 }
 
-const formatDate = (date: string) => new Intl.DateTimeFormat('pt-BR', {
-  dateStyle: 'long',
-  timeZone: 'UTC',
-}).format(new Date(`${date}T12:00:00Z`))
+const formatDate = (date: string) => {
+  const formatted = new Intl.DateTimeFormat('pt-BR', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${date}T12:00:00Z`))
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1)
+}
 
 function CalendarIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z" /></svg>
@@ -48,6 +54,7 @@ function App() {
   const [appointments, setAppointments] = useState<Appointment[]>([])
   const [loading, setLoading] = useState(false)
   const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [confirmation, setConfirmation] = useState<Appointment | null>(null)
 
   const loadAppointments = useCallback(async () => {
     const response = await fetch('/api/appointments')
@@ -95,12 +102,13 @@ function App() {
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error)
-      setNotice({ type: 'success', text: `${data.message} Protocolo #${data.appointment.id}.` })
+      setConfirmation(data.appointment)
       setPatientName('')
       setPhone('')
       setSelectedTime('')
       await Promise.all([loadAvailability(date), loadAppointments()])
     } catch (error) {
+      setConfirmation(null)
       setNotice({ type: 'error', text: error instanceof Error ? error.message : 'Falha ao agendar.' })
     } finally {
       setLoading(false)
@@ -128,7 +136,7 @@ function App() {
           <label className="date-field">
             <CalendarIcon />
             <span><small>Data da consulta</small><strong>{formatDate(date)}</strong></span>
-            <input aria-label="Data da consulta" type="date" min="2026-01-01" max="2026-12-31" value={date} onChange={(event) => setDate(event.target.value)} />
+            <input aria-label="Data da consulta" type="date" min="2026-01-01" max="2026-12-31" value={date} onChange={(event) => { setDate(event.target.value); setConfirmation(null) }} />
           </label>
 
           <div className="step-heading"><span>2</span><div><strong>Selecione um horário</strong><small>Consultas com duração de 1 hora</small></div></div>
@@ -150,7 +158,19 @@ function App() {
           </div>
 
           {notice ? <p className={`notice ${notice.type}`} role="status">{notice.text}</p> : null}
-          <button className="submit-button" disabled={loading || !selectedTime} type="submit">{loading ? 'Processando...' : 'Confirmar agendamento'} <span>→</span></button>
+          {confirmation ? (
+            <section className="confirmation-card" role="status" aria-label="Agendamento confirmado">
+              <div className="confirmation-title"><span>✓</span><div><strong>Consulta confirmada!</strong><small>Protocolo #{confirmation.id}</small></div></div>
+              <dl>
+                <div><dt>Paciente</dt><dd>{confirmation.patientName}</dd></div>
+                <div><dt>Data</dt><dd>{formatDate(confirmation.date)}</dd></div>
+                <div><dt>Horário</dt><dd>{confirmation.time} · Horário de Brasília</dd></div>
+              </dl>
+              <button type="button" onClick={() => setConfirmation(null)}>Agendar outra consulta</button>
+            </section>
+          ) : (
+            <button className="submit-button" disabled={loading || !selectedTime} type="submit">{loading ? 'Processando...' : 'Confirmar agendamento'} <span>→</span></button>
+          )}
         </form>
       </section>
 

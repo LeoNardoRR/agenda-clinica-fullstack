@@ -64,7 +64,7 @@ form { padding: 27px 32px 32px; }
 .date-field svg { width: 23px; fill: none; stroke: #7063dd; stroke-width: 1.7; }
 .date-field span { display: flex; flex-direction: column; min-width: 0; }
 .date-field small { font-size: 10px; color: #9998a9; }
-.date-field strong { font-size: 13px; margin-top: 3px; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.date-field strong { font-size: 13px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .date-field input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
 
 .slots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; min-height: 43px; }
@@ -84,6 +84,17 @@ form { padding: 27px 32px 32px; }
 .notice { margin: 18px 0 -5px; padding: 11px 13px; border-radius: 11px; font-size: 12px; line-height: 1.4; }
 .notice.success { color: #34704a; background: #eaf8ef; }
 .notice.error { color: #954939; background: #fff0ec; }
+.confirmation-card { margin-top: 22px; padding: 17px; border: 1px solid #cdebd7; border-radius: 17px; background: #f1fbf4; }
+.confirmation-title { display: flex; align-items: center; gap: 11px; }
+.confirmation-title > span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #58b978; color: white; font-weight: 800; }
+.confirmation-title > div { display: flex; flex-direction: column; }
+.confirmation-title strong { color: #2f6f47; font: 700 14px 'Manrope'; }
+.confirmation-title small { margin-top: 2px; color: #659074; font-size: 10px; }
+.confirmation-card dl { display: grid; gap: 9px; margin: 15px 0; padding: 13px 0; border-block: 1px solid #d9eee0; }
+.confirmation-card dl div { display: grid; grid-template-columns: 65px 1fr; gap: 10px; }
+.confirmation-card dt { color: #789384; font-size: 10px; }
+.confirmation-card dd { margin: 0; color: #315b40; font-size: 11px; font-weight: 700; }
+.confirmation-card button { width: 100%; border: 0; background: transparent; color: #3e8157; font-size: 11px; font-weight: 700; }
 .submit-button { width: 100%; min-height: 54px; margin-top: 22px; border: 0; border-radius: 15px; background: #7567e8; color: white; font-weight: 700; box-shadow: 0 13px 25px rgba(117,103,232,.27); transition: .18s ease; }
 .submit-button:hover:not(:disabled) { background: #6658dc; transform: translateY(-1px); }
 .submit-button:disabled { cursor: not-allowed; opacity: .48; box-shadow: none; }

@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+
+:root {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #20203b;
+  background: #7567e8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.page-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(390px, 540px) minmax(260px, 360px);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(28px, 4vw, 70px);
+  padding: 54px clamp(24px, 5vw, 90px);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-shell::before, .page-shell::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.09);
+  pointer-events: none;
+}
+.page-shell::before { width: 430px; height: 430px; top: -210px; right: 4%; }
+.page-shell::after { width: 260px; height: 260px; bottom: -160px; left: 9%; }
+
+.intro { color: white; z-index: 1; }
+.eyebrow { text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 700; }
+.intro h1 { font: 800 clamp(38px, 4vw, 62px)/1.05 'Manrope', sans-serif; letter-spacing: -.045em; margin: 18px 0 24px; }
+.intro > p { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.78); max-width: 35ch; }
+.trust-note { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; font-size: 13px; color: rgba(255,255,255,.88); }
+.trust-note span { display: grid; place-items: center; width: 24px; height: 24px; background: rgba(255,255,255,.16); border-radius: 50%; }
+
+.scheduler-card, .upcoming-card { position: relative; z-index: 1; background: #f8f9ff; box-shadow: 0 28px 70px rgba(37,31,94,.28); }
+.scheduler-card { border-radius: 36px; overflow: hidden; }
+.card-header { min-height: 90px; padding: 22px 32px; background: white; display: flex; align-items: center; gap: 13px; border-bottom: 1px solid #ececf6; }
+.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; color: white; font: 800 19px 'Manrope'; background: linear-gradient(145deg,#8274f0,#6355d8); }
+.card-header div:nth-child(2) { display: flex; flex-direction: column; }
+.card-header strong { font: 700 16px 'Manrope'; }
+.card-header span { font-size: 11px; color: #8b8aa0; }
+.secure-badge { margin-left: auto; padding: 7px 10px; border-radius: 20px; background: #eef9f1; color: #438257 !important; font-weight: 700; }
+
+form { padding: 27px 32px 32px; }
+.step-heading { display: flex; align-items: center; gap: 12px; margin: 3px 0 14px; }
+.step-heading:not(:first-child) { margin-top: 27px; }
+.step-heading > span { display: grid; place-items: center; flex: 0 0 27px; height: 27px; border-radius: 9px; color: #6d60dc; background: #ebe9ff; font-size: 12px; font-weight: 800; }
+.step-heading div { display: flex; flex-direction: column; }
+.step-heading strong { font: 700 14px 'Manrope'; }
+.step-heading small { margin-top: 2px; color: #9291a4; font-size: 11px; }
+
+.date-field { min-height: 67px; border: 1px solid #e5e5ef; background: white; border-radius: 17px; display: flex; align-items: center; gap: 13px; padding: 13px 15px; position: relative; transition: border-color .2s, box-shadow .2s; }
+.date-field:focus-within { border-color: #7b6ee6; box-shadow: 0 0 0 4px rgba(123,110,230,.1); }
+.date-field svg { width: 23px; fill: none; stroke: #7063dd; stroke-width: 1.7; }
+.date-field span { display: flex; flex-direction: column; min-width: 0; }
+.date-field small { font-size: 10px; color: #9998a9; }
+.date-field strong { font-size: 13px; margin-top: 3px; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.date-field input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
+
+.slots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; min-height: 43px; }
+.slot { display: inline-flex; justify-content: center; align-items: center; gap: 5px; min-height: 42px; border: 1px solid #e7e7f1; background: white; color: #68677c; border-radius: 12px; font-size: 12px; font-weight: 700; transition: .18s ease; }
+.slot:hover { border-color: #7b6ee6; color: #6256cf; transform: translateY(-1px); }
+.slot.selected { color: white; border-color: #7567e8; background: #7567e8; box-shadow: 0 8px 18px rgba(117,103,232,.28); }
+.slot svg { width: 14px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.status { grid-column: 1/-1; margin: 0; padding: 13px; border-radius: 12px; background: white; text-align: center; color: #77768b; font-size: 12px; }
+.status.blocked { background: #fff4f1; color: #9a5546; }
+
+.patient-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.patient-fields label { display: flex; flex-direction: column; gap: 7px; font-size: 11px; font-weight: 600; color: #79788c; }
+.patient-fields input { width: 100%; min-height: 45px; border: 1px solid #e5e5ef; border-radius: 12px; padding: 0 13px; color: #27263d; outline: none; background: white; }
+.patient-fields input:focus { border-color: #7567e8; box-shadow: 0 0 0 3px rgba(117,103,232,.1); }
+.patient-fields input::placeholder { color: #b1b0be; font-size: 11px; }
+
+.notice { margin: 18px 0 -5px; padding: 11px 13px; border-radius: 11px; font-size: 12px; line-height: 1.4; }
+.notice.success { color: #34704a; background: #eaf8ef; }
+.notice.error { color: #954939; background: #fff0ec; }
+.submit-button { width: 100%; min-height: 54px; margin-top: 22px; border: 0; border-radius: 15px; background: #7567e8; color: white; font-weight: 700; box-shadow: 0 13px 25px rgba(117,103,232,.27); transition: .18s ease; }
+.submit-button:hover:not(:disabled) { background: #6658dc; transform: translateY(-1px); }
+.submit-button:disabled { cursor: not-allowed; opacity: .48; box-shadow: none; }
+.submit-button span { margin-left: 8px; }
+
+.upcoming-card { align-self: center; border-radius: 26px; padding: 27px; background: rgba(255,255,255,.96); }
+.aside-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.aside-heading .eyebrow { color: #7567e8; font-size: 9px; }
+.aside-heading h2 { font: 700 20px 'Manrope'; margin: 6px 0 0; }
+.count { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; background: #efedff; color: #695cd8; font-size: 12px; font-weight: 800; }
+.appointment-item { display: grid; grid-template-columns: 46px 1fr 8px; gap: 12px; align-items: center; padding: 13px 0; border-top: 1px solid #ececf3; }
+.date-tile { display: flex; flex-direction: column; align-items: center; padding: 6px; background: #f0effd; border-radius: 11px; color: #6155c9; }
+.date-tile strong { font: 800 16px 'Manrope'; }
+.date-tile span { font-size: 9px; text-transform: uppercase; }
+.appointment-item > div:nth-child(2) { min-width: 0; display: flex; flex-direction: column; }
+.appointment-item > div:nth-child(2) strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+.appointment-item > div:nth-child(2) span { margin-top: 4px; font-size: 10px; color: #9291a2; }
+.confirmed-dot { width: 7px; height: 7px; border-radius: 50%; background: #5fc581; }
+.empty { color: #88879a; font-size: 13px; line-height: 1.5; }
+.api-note { margin: 19px 0 0; padding-top: 16px; border-top: 1px solid #ececf3; color: #a09fad; font-size: 9px; text-align: center; }
+
+@media (max-width: 1120px) {
+  .page-shell { grid-template-columns: minmax(260px, 360px) minmax(390px, 520px); }
+  .upcoming-card { display: none; }
+}
+
+@media (max-width: 780px) {
+  .page-shell { display: block; padding: 30px 18px; overflow: visible; }
+  .intro { max-width: 540px; margin: 0 auto 30px; text-align: center; }
+  .intro h1 { font-size: clamp(35px, 10vw, 48px); margin: 14px 0 18px; }
+  .intro > p { margin-inline: auto; font-size: 16px; }
+  .scheduler-card { max-width: 540px; margin: auto; border-radius: 28px; }
+}
+
+@media (max-width: 520px) {
+  .page-shell { padding: 24px 12px; }
+  .card-header { padding: 18px 20px; }
+  form { padding: 23px 20px 25px; }
+  .slots { grid-template-columns: repeat(2, 1fr); }
+  .patient-fields { grid-template-columns: 1fr; }
+  .intro .trust-note { margin-top: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}

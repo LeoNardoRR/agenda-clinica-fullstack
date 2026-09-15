@@ -11,7 +11,7 @@
 
 Sistema Full Stack para consultar horários disponíveis, validar dias úteis e confirmar agendamentos em tempo real.
 
-### [Acessar demonstração pública](https://leonardorr.github.io/agenda-clinica-fullstack/)
+### [Acessar a aplicação online](https://leonardorr.github.io/agenda-clinica-fullstack/)
 
 </div>
 
@@ -93,14 +93,18 @@ Salvar no SQLite e retornar a confirmação
 - API pública [Nager.Date](https://date.nager.at/) para feriados brasileiros;
 - Node Test Runner para testes automatizados.
 
-## Como executar
+## Acesse online
+
+A interface está publicada e pronta para uso no GitHub Pages:
+
+### [https://leonardorr.github.io/agenda-clinica-fullstack/](https://leonardorr.github.io/agenda-clinica-fullstack/)
+
+## Executar o projeto Full Stack
 
 ### Pré-requisitos
 
 - Node.js 22 ou superior;
 - npm.
-
-### Desenvolvimento
 
 ```bash
 git clone https://github.com/LeoNardoRR/agenda-clinica-fullstack.git
@@ -109,18 +113,12 @@ npm install
 npm run dev
 ```
 
-Abra o frontend em [http://localhost:5173](http://localhost:5173). A API será executada em `http://localhost:3333`.
-
-### Produção local
+Para gerar e executar a versão de produção completa:
 
 ```bash
 npm run build
 npm start
 ```
-
-Depois, abra [http://localhost:3333](http://localhost:3333).
-
-> O `index.html` não deve ser aberto diretamente pelo protocolo `file://`. A aplicação precisa ser servida pelo Vite ou pelo servidor Node.js.
 
 ## API REST
 
